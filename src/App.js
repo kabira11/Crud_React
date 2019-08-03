@@ -8,6 +8,7 @@ import AddEmployee from './components/AddEmployee'
 import {NotificationContainer} from 'react-notifications';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import logout from './components/logout';
  
 
 
@@ -21,6 +22,7 @@ import Login from './components/Login';
               <Route exact path="/addemployee" component={AddEmployee}></Route>
               <Route exact path="/signup" component={Signup}></Route>
               <Route exact path="/signin" component={Login}></Route>
+              <Route exact path="/logout" component={logout}></Route>
             </Switch>
             <NotificationContainer></NotificationContainer>
           </Router>

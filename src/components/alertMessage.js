@@ -13,11 +13,10 @@ export const alertmesage = {
              return NotificationManager.warning(message);
            
           case 500:
-            return NotificationManager.error(message, 5000, () => {
-              alert('callback');
-            });
+            return NotificationManager.error(message
+            );
            default: 
-            return NotificationManager.info(message);
+            return NotificationManager.error(message);
       }
     }
 }

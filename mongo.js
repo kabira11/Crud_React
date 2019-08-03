@@ -1,9 +1,11 @@
 const mongoose = require("mongoose")
 const mongoDBErrors = require("mongoose-mongodb-errors");
+const config = require('./config/database')
+//we want to use es6 promise not mongoose promises for this below line used for
 mongoose.Promise = global.Promise;
 mongoose.plugin(mongoDBErrors);
 
-mongoose.connect('mongodb://localhost:27017/EmployeeDB' , {useNewUrlParser : true}, (err) =>{
+mongoose.connect(config.database , {useNewUrlParser : true}, (err) =>{
     if(!err) 
     {
         console.log("DB connection successful...")

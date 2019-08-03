@@ -60,3 +60,5 @@ app.use((error , req ,res , next) => {
 app.listen(5004,()=>{
     console.log('Express server started at port : 5004');
 })
+
+//npm run dev for running server.js which is define in package.json

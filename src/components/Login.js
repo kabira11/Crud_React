@@ -38,12 +38,15 @@ class Login extends Component {
             // //for redirecting home page
             console.log(res);
             if(res.status == 201){
+                console.log(res.data.email);
+                sessionStorage.setItem("email", res.data.email);
                 this.setState({
                     email: "" ,
                     password: "" 
                 });
+                console.log(sessionStorage.getItem("email"))
                 this.props.history.push("/");
-                alertmesage.createNotification(res.status,"Signed Up Successfully")
+                alertmesage.createNotification(res.status,"Logged in Successfully")
                 
             }else{
                 alertmesage.createNotification(res.status,res.message)

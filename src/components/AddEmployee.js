@@ -4,6 +4,7 @@ import { userModule } from '../api/api';
 import { Link } from 'react-router-dom'
 import '../App.css'
 import  { alertmesage }  from './alertMessage'; 
+import store from '../store';
 
 class AddEmployee extends Component {
 
@@ -21,17 +22,24 @@ class AddEmployee extends Component {
         this.handleUpdateUser =  this.handleUpdateUser.bind(this);
     }
 
-    async componentWillMount(){
+    async componentDidMount(){
         //this data will come from employeelist.js from state property in Link
         //this.props.location.state.employeeId
-        const selectedEmployee = await userModule.selectedUser(this.props.location.state.employeeId)
-        this.setState({
-            _id: selectedEmployee._id ,
-            fullName: selectedEmployee.fullName ,
-            email: selectedEmployee.email ,
-            mobile: selectedEmployee.mobile,
-            city: selectedEmployee.city
-        })
+        console.log("object")
+        // console.log(this.props.location.state.employeeId)
+        //this will run when we are updating employee
+        if(this.props.location.state.employeeId){
+            const selectedEmployee = await userModule.selectedUser(this.props.location.state.employeeId)
+            console.log(selectedEmployee)
+            this.setState({
+                _id: selectedEmployee._id ,
+                fullName: selectedEmployee.fullName ,
+                email: selectedEmployee.email ,
+                mobile: selectedEmployee.mobile,
+                city: selectedEmployee.city
+            })
+        }
+
       }
 
     //Udate User
@@ -55,16 +63,21 @@ class AddEmployee extends Component {
 
     //Update value in state on type something in Input Fields.
     handleChange(event){
+        console.log(event.target.value);
+        //[event.target.name] for getting value from form with refernece of name properties
         this.setState({
-            fullName: this.refs.fullName.value ,
-            email: this.refs.email.value ,
-            mobile: this.refs.mobile.value,
-            city: this.refs.city.value
+            [event.target.name]: event.target.value
+            // [event.target.value.fullName]: event.target.value ,
+            // [event.target.value.email]: event.target.value ,
+            // [event.target.value.mobile]: event.target.value,
+            // [event.target.value.city]: event.target.value
         })
+        event.preventDefault();
     }
 
     //Method for Submit Form.
     async handleSubmitForm(event){
+        console.log("jkjkj")
         event.preventDefault();
         if(this.state.fullName && this.state.email && this.state.mobile && this.state.city){
             const res = await userModule.addUser(this.state)
@@ -86,6 +99,8 @@ class AddEmployee extends Component {
 
 
     render(){
+        console.log("render")
+        console.log(!this.props.location.state.employeeId)
         return(
             <form className="text-center border border-light p-5" onSubmit={this.handleSubmitForm}>
                 <div className = "col-md-4 offset-md-4">
@@ -96,13 +111,14 @@ class AddEmployee extends Component {
                     }
                     
 
-                    <input type="text" id="name" className="form-control mb-4" placeholder="Name" value={this.state.fullName} onChange={this.handleChange} ref="fullName"/>
+                    <input type="text" id="name" className="form-control mb-4" placeholder="Name" value={this.state.fullName} onChange={this.handleChange} name="fullName"/>
 
-                    <input type="email" id="email" className="form-control mb-4" placeholder="E-mail" value={this.state.email} onChange={this.handleChange} ref="email"/>
+                    <input type="email" id="email" className="form-control mb-4" placeholder="E-mail" value={this.state.email} onChange={this.handleChange} name="email"/>
 
-                    <input type="text" id="mobile" className="form-control mb-4" placeholder="Mobile Number" value={this.state.mobile} onChange={this.handleChange} ref="mobile"/>
+                    <input type="text" id="mobile" className="form-control mb-4" placeholder="Mobile Number" value={this.state.mobile} onChange={this.handleChange} name="mobile"/>
 
-                    <input type="text" id="city" className="form-control mb-4" placeholder="City" value={this.state.city} onChange={this.handleChange} ref="city"/>
+                    <input type="text" id="city" className="form-control mb-4" placeholder="City" value={this.state.city} onChange={this.handleChange} name="city"/>
+                    
                     {
                             !this.props.location.state.employeeId ?
                             <button className="btn btn-info btn-block btn-sm" type="submit" onClick={this.handleSubmitForm}>Submit</button> :

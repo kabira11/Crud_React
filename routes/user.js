@@ -3,6 +3,10 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 
 const User = mongoose.model("User")
+const bcrypt = require('bcryptjs')
+const config = require('../config/database')
+const sec = config.jwtSecret;
+const jwt = require ('jsonwebtoken')
 
 
 
@@ -33,16 +37,17 @@ router.post("/checklogin" , async (req,res) => {
     const users = await User.findOne({
         email : req.body.email,
         password : req.body.password
-    },'email')
+    })
     .then(response => {
-        console.log("pankaj");
-        console.log(response.data);
+        console.log("pankaj SUCCESS");
+        console.log(response.password);
+    
      return res.status(201).json(response)
    })
    .catch(err => {
-     console.log("bhardwaj");
+     console.log("bhardwaj ERROR");
      const response = {
-        message : "email doesn't exist."
+        message : "Either Email or Password is wrong."
      }
      return res.status(404).json(response)
    });
@@ -50,38 +55,76 @@ router.post("/checklogin" , async (req,res) => {
 })
 
 
+
 // Post data
 router.post("/" , async (req,res) => {
-    console.log("in user0")
+    // console.log("in user0")
+    // console.log(req.body)
+    //Destructuring of request parameter
+    const { firstName , lastName , email, password} = req.body;
+
     const users = await User.findOne({
-        email : req.body.email
+        email : email
     },'email')
-console.log("in user")
     if(users){
-        console.log("in user1")
         response = {
             message : "email already exist."
         }
         return res.status(400).json(response)
     }else{
-
         const user = new User();
-        user.firstName = req.body.firstName;
-        user.lastName = req.body.lastName;
-        user.email = req.body.email;
-        user.password = req.body.password;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+        user.password = password;
+        user.save()
+        return res.status(201).json({
+            "data":user
+        })
+//create salt & hash
+        // bcrypt.genSalt(10,(err , salt) => {
+        //     bcrypt.hash(user.password,salt,(err,hash) => {
+        //         if (err) throw err;
+        //         user.password = hash;
+        //         user.save()
+        //         .then(response => {
+        //             console.log("pankaj");
+        //             console.log(response._id);
+        //             jwt.sign(
+                        
+        //                 {id:response._id},
+        //                 sec,
+        //                 {expiresIn : 3600},
 
+        //             (err,token) => {
+        //                 if(err) throw err;
 
-       await user.save()
-       .then(response => {
-           console.log("pankaj");
-           console.log(response.data);
-        return res.status(201).json(response)
-      })
-      .catch(response => {
-        console.log("bhardwaj");
-        return res.status(500).json(response)
-      });
+        //                 return res.status(201).json({
+        //                     "data":response,
+        //                     "token":token
+        //                 })
+        //             }
+        //             )
+
+        //         //  return res.status(201).json(response)
+        //        })
+        //        .catch(response => {
+        //          console.log("bhardwaj");
+        //          return res.status(500).json({response})
+        //        });
+        //     })
+        // })
+
+    //    await user.save()
+    //    .then(response => {
+    //        console.log("pankaj");
+    //        console.log(response.data);
+    //     return res.status(201).json(response)
+    //   })
+    //   .catch(response => {
+    //     console.log("bhardwaj");
+    //     return res.status(500).json(response)
+    //   });
 
 
     }
