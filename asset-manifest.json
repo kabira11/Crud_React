@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/Crud_React/static/css/main.67c2e290.chunk.css",
+    "main.js": "/Crud_React/static/js/main.2db4c9cb.chunk.js",
+    "main.js.map": "/Crud_React/static/js/main.2db4c9cb.chunk.js.map",
+    "runtime~main.js": "/Crud_React/static/js/runtime~main.4fcb44db.js",
+    "runtime~main.js.map": "/Crud_React/static/js/runtime~main.4fcb44db.js.map",
+    "static/css/2.4fa47c11.chunk.css": "/Crud_React/static/css/2.4fa47c11.chunk.css",
+    "static/js/2.e0dab043.chunk.js": "/Crud_React/static/js/2.e0dab043.chunk.js",
+    "static/js/2.e0dab043.chunk.js.map": "/Crud_React/static/js/2.e0dab043.chunk.js.map",
+    "index.html": "/Crud_React/index.html",
+    "precache-manifest.378cd269fcda2eec5d6829e96b1b513c.js": "/Crud_React/precache-manifest.378cd269fcda2eec5d6829e96b1b513c.js",
+    "service-worker.js": "/Crud_React/service-worker.js",
+    "static/css/2.4fa47c11.chunk.css.map": "/Crud_React/static/css/2.4fa47c11.chunk.css.map",
+    "static/css/main.67c2e290.chunk.css.map": "/Crud_React/static/css/main.67c2e290.chunk.css.map",
+    "static/media/notifications.css": "/Crud_React/static/media/notification.c0d3c94c.eot"
+  }
+}
